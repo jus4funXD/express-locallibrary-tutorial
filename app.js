@@ -4,10 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const catalogRouter = require("./routes/catalog"); // 导入 catalog 路由
 var app = express();
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/catalog", catalogRouter); // 将 catalog 路由添加进中间件链
+
+
 // 设置 Mongoose 连接，bash:node populatedb mongodb://localhost:27017/local_library
 const mongoose = require("mongoose");
 const mongoDB = "mongodb://localhost:27017";
