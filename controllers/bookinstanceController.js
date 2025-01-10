@@ -2,9 +2,16 @@ const BookInstance = require("../models/bookinstance");
 const asyncHandler = require("express-async-handler");
 
 // 显示所有的 BookInstances
+// 呈现所有书本实例（BookInstance）的列表
 exports.bookinstance_list = asyncHandler(async (req, res, next) => {
-  res.send("未实现：BookInstance 列表");
+  const allBookInstances = await BookInstance.find().populate("book").exec();
+
+  res.render("bookinstance_list", {
+    title: "Book Instance List",
+    bookinstance_list: allBookInstances,
+  });
 });
+
 
 // 显示特定 BookInstance 的详情页
 exports.bookinstance_detail = asyncHandler(async (req, res, next) => {

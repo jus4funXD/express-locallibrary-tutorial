@@ -14,9 +14,9 @@ app.use("/users", usersRouter);
 app.use("/catalog", catalogRouter); // 将 catalog 路由添加进中间件链
 
 
-// 设置 Mongoose 连接，bash:node populatedb mongodb://localhost:27017/local_library
+// 设置 Mongoose 连接，数据初始化：bash:node populatedb mongodb://localhost:27017/local_library
 const mongoose = require("mongoose");
-const mongoDB = "mongodb://localhost:27017";
+const mongoDB = "mongodb://localhost:27017/local_library";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
