@@ -2,8 +2,39 @@ const Author = require("../models/author");
 const asyncHandler = require("express-async-handler");
 
 // 显示完整的作者列表
-exports.author_list = (req, res) => {
-  res.send("未实现：作者列表");
+// Display list of all Authors.
+
+// exports.author_list = function (req, res, next) {
+//   Author.find()
+//     .sort([["family_name", "ascending"]])
+//     .exec(function (err, list_authors) {
+//       if (err) {
+//         return next(err);
+//       }
+//       //Successful, so render
+//       res.render("author_list", {
+//         title: "Author List",
+//         author_list: list_authors,
+//       });
+//     });
+// };
+//在使用 Mongoose 的 Query.prototype.exec() 方法时，该方法不再接受回调函数。
+// 这很可能是因为 Mongoose 库进行了更新，其 API 发生了变化，导致原有的代码不再兼容。
+// 为了解决这个问题，我们可以使用 async/await 语法来代替回调函数。
+
+exports.author_list = async function (req, res, next) {
+  try {
+    const list_authors = await Author.find().sort([
+      ["family_name", "ascending"],
+    ]);
+    // 成功处理逻辑
+    res.render("author_list", {
+      title: "Author List",
+      author_list: list_authors,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // 为每位作者显示详细信息的页面
